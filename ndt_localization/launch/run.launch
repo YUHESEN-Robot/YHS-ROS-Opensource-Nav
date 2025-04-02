@@ -1,0 +1,9 @@
+<!--  -->
+
+<launch>
+
+  <!-- <rosparam file="/home/yhs/catkin_ws/src/yhs_nav/param/yhs_nav_param.yaml" command="load" /> -->
+
+  <node pkg="ndt_localization" type="ndt_localization_node" name="ndt_localization_node" output="screen" />
+
+</launch>

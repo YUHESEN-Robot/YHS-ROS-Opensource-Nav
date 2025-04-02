@@ -1,0 +1,18 @@
+std_msgs/Header header
+
+float32 graph_follow_max_speed
+float32 record_follow_max_speed  
+float32 goal_follow_max_speed
+bool graph_void_obstacle
+bool record_void_obstacle
+bool lidar_void_obstacle  
+bool ultrasonic1_void_obstacle
+bool ultrasonic2_void_obstacle
+bool ultrasonic3_void_obstacle
+bool ultrasonic4_void_obstacle
+bool ultrasonic5_void_obstacle
+bool ultrasonic6_void_obstacle
+bool ultrasonic7_void_obstacle
+bool ultrasonic8_void_obstacle
+bool camera1_void_obstacle
+bool camera2_void_obstacle

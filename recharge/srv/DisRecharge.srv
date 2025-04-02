@@ -1,0 +1,8 @@
+# Request
+std_msgs/String dis_recharge
+
+---
+
+# Response
+int8 result 
+

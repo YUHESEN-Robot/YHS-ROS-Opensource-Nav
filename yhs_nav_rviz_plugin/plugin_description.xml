@@ -1,0 +1,7 @@
+<library path="lib/libnavi_tools_rviz_plugin">
+    <class name="navi_tools_rviz_plugin/www.yuhesen.com"
+           type="navi_tools_rviz_plugin::NaviGoalsPathsPanel"
+           base_class_type="rviz::Panel">
+        <description>navi_tools_rviz_plugin.</description>
+    </class>
+</library>

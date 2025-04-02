@@ -1,0 +1,7 @@
+
+<launch>
+
+<node pkg="recharge" type="recharge_node" name="recharge_node"  output="screen">
+</node>
+
+</launch>

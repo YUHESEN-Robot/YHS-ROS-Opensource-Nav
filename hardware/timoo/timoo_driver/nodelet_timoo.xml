@@ -1,0 +1,9 @@
+<library path="lib/libtimoo_driver_nodelet">
+  <class name="timoo_driver/DriverNodelet"
+         type="timoo_driver::DriverNodelet"
+         base_class_type="nodelet::Nodelet">
+    <description> 
+      Publish raw timoo data packets.
+    </description>
+  </class>
+</library>

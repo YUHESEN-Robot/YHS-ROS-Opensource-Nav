@@ -1,0 +1,41 @@
+<!-- cartographer建图launch文件 -->
+
+<launch>
+
+  <!-- 载入参数文件 -->
+  <rosparam file="/home/yhs/catkin_ws/src/yhs_nav/param/yhs_nav_param.yaml" command="load" />
+
+  <!-- cartographer建图不需要 odom to base_link -->
+  <param name="/yhs_can_control/tfUsed" value="false" />
+
+  <!-- 启动底盘驱动 -->
+  <include file="$(find yhs_can_control)/launch/yhs_can_control.launch" >
+    <arg name="is_load_param" value="false"/>
+  </include>
+
+  <!-- 启动IMU节点 -->
+  <include file="$(find serial_imu)/launch/imu_msg.launch" />
+
+  <!-- 启动激光节点 -->
+  <!-- <include file="$(find rslidar_sdk)/launch/start.launch" /> -->
+  <include file="$(find timoo_pointcloud)/launch/TM16.launch" />
+  <!-- <include file="$(find lslidar_cx_driver)/launch/lslidar_cx.launch" /> -->
+
+  <!-- cartographer建图节点 -->
+  <node name="cartographer_node" pkg="cartographer_ros"
+    type="cartographer_node"
+    args="
+       -configuration_directory $(find cartographer_ros)/configuration_files
+       -configuration_basename dgt_001mini.lua"
+    output="screen">
+    <remap from="scan" to="/scan" />
+    <remap from="imu" to="/imu_data" />
+    <remap from="odom" to="/odom" />
+    <remap from="/points2" to="/timoo_points" />
+  </node>
+
+  <!-- 转栅格地图节点 -->
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+    type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
+
+</launch>

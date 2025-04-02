@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name = "double_camera" default = "false"/>
+
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan1">
+
+        <remap from="cloud_in" to="/ascamera_hp60c_ln_1/depth/points"/>
+        <remap from="scan" to="scan1"/>
+        <rosparam>
+            target_frame: ascamera_hp60c_ln_1 # Leave disabled to output scan in pointcloud frame
+            transform_tolerance: 0.001
+            min_height: -0.3
+            max_height: 1.5
+
+            angle_min: -3.1415926
+            angle_max: 3.1415926  
+            angle_increment: 0.006 
+            scan_time: 0.1
+            range_min: 0.1
+            range_max: 2.0
+            use_inf: false
+            inf_epsilon: 1.0
+
+            concurrency_level: 1
+        </rosparam>
+    </node>
+
+    <node if = "$(arg double_camera)" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan2">
+
+        <remap from="cloud_in" to="/ascamera_hp60c_ln_2/depth/points"/>
+        <remap from="scan" to="scan2"/>
+        <rosparam>
+            target_frame: ascamera_hp60c_ln_2 # Leave disabled to output scan in pointcloud frame
+            transform_tolerance: 0.001
+            min_height: -0.3
+            max_height: 1.5
+
+            angle_min: -3.1415926
+            angle_max: 3.1415926
+            angle_increment: 0.006
+            scan_time: 0.1
+            range_min: 0.1
+            range_max: 0.5
+            use_inf: false
+            inf_epsilon: 1.0
+
+            concurrency_level: 1
+        </rosparam>
+
+    </node>
+</launch>
+
+
+
+
+

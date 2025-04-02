@@ -1,0 +1,28 @@
+<!-- gmapping建图launch文件 -->
+
+<launch>
+
+  <!-- 载入参数文件 -->
+  <rosparam file="/home/yhs/catkin_ws/src/yhs_nav/param/yhs_nav_param.yaml" command="load" />
+
+  <!-- gmapping建图需要 odom to base_link -->
+  <param name="/yhs_can_control/tfUsed" value="true"/>
+
+  <!-- 启动底盘驱动 -->
+  <include file="$(find yhs_can_control)/launch/yhs_can_control.launch" >
+    <arg name="is_load_param" value="false"/>
+  </include>
+
+  <!-- 启动IMU节点 -->
+  <include file="$(find serial_imu)/launch/imu_msg.launch" />
+
+  <!-- 启动激光节点 -->
+  <!-- <include file="$(find rslidar_sdk)/launch/start.launch" /> -->
+  <include file="$(find timoo_pointcloud)/launch/TM16.launch" />
+  <!-- <include file="$(find lslidar_cx_driver)/launch/lslidar_cx.launch" /> -->
+
+  <!-- 建图节点 -->
+  <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping" output="screen">
+  </node>
+
+</launch>

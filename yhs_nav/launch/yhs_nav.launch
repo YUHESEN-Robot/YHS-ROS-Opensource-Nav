@@ -1,0 +1,45 @@
+<!-- 3D导航launch文件 -->
+
+<launch>
+
+  <!-- 载入参数文件 -->
+  <rosparam file="/home/yhs/catkin_ws/src/yhs_nav/param/yhs_nav_param.yaml" command="load" />
+
+  <!-- 3D导航不需要 odom to base_link -->
+  <param name="/yhs_can_control/tfUsed" value="false" />
+
+  <!-- 加载地图节点 -->
+  <arg name="map_name" default="demo1" />
+  <arg name="map_file" default="$(find yhs_nav)/map/$(arg map_name).yaml" />
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!-- 启动底盘驱动 -->
+  <include file="$(find yhs_can_control)/launch/yhs_can_control.launch" >
+    <arg name="is_load_param" value="false"/>
+  </include>
+
+  <!-- 启动IMU节点 -->
+  <include file="$(find serial_imu)/launch/imu_msg.launch" />
+
+  <!-- 启动激光节点 -->
+  <!-- <include file="$(find rslidar_sdk)/launch/start.launch" /> -->
+  <include file="$(find timoo_pointcloud)/launch/TM16.launch" />
+  <!-- <include file="$(find lslidar_cx_driver)/launch/lslidar_cx.launch" /> -->
+  <include file="$(find ascamera_listener)/launch/hp60c_multiple.launch" />
+  <!-- 启动相机节点 -->
+  <!-- <include file="$(find ascamera_listener)/launch/hp60c.launch" /> -->
+
+  <!-- 启动速度平滑节点 -->
+  <include file="$(find yocs_velocity_smoother)/launch/standalone.launch" />
+
+  <!-- 启动定位节点 -->
+  <include file="$(find ndt_localization)/launch/run.launch" />
+
+  <!-- 启动导航节点 -->
+  <node pkg="move_base" type="move_base" name="move_base" respawn="true" output="screen"
+    clear_params="true" />
+
+  <!-- 回充节点节点 -->
+  <!-- <include file="$(find recharge)/launch/run.launch" />I -->
+
+</launch>

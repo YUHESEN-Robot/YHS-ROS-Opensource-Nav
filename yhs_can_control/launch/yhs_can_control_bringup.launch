@@ -1,0 +1,21 @@
+<!-- -->
+<launch>
+
+  <arg name="is_load_param" default="true" />
+  <rosparam if="$(arg is_load_param)"
+    file="/home/yhs/catkin_ws/src/yhs_nav/param/yhs_nav_param.yaml" command="load" />
+
+  <node pkg="yhs_can_control" type="yhs_can_control_node" name="yhs_can_control_node"
+    output="screen">
+  </node>
+
+  <!-- 启动IMU节点 -->
+  <include file="$(find serial_imu)/launch/imu_msg.launch" />
+
+  <!-- 启动激光节点 -->
+  <include file="$(find timoo_pointcloud)/launch/TM16.launch" />
+
+  <!--启动gnss节点-->
+  <include file="$(find nmea_ros_driver)/launch/bringup.launch" />  
+
+</launch>

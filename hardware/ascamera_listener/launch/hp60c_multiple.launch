@@ -1,0 +1,79 @@
+<!---->
+
+<launch>
+
+  <arg name="double_camera" default="true" />
+  <arg name="argPath" default="$(find ascamera_listener)/configurationfiles" />
+  <node pkg="ascamera_listener" name="ascamera_hp60c_ln_1" type="ascamera_listener_node"
+    respawn="true" output="screen">
+
+    <param name="depth_width" type="int" value="640" />
+    <param name="depth_height" type="int" value="480" />
+    <param name="rgb_width" type="int" value="640" />
+    <param name="rgb_height" type="int" value="480" />
+    <param name="fps" type="int" value="15" />
+
+    <!--这里进行角度调节-->
+    <param name="roll" type="double" value="0.0" />
+    <param name="pitch" type="double" value="15.0" />
+    <param name="yaw" type="double" value="0.0" />
+
+    <!-- usb bus number: -1 not specified-->
+    <param name="usb_bus_no" type="int" value="1" />
+    <!-- usb path(port numbers): "null" not specified-->
+    <param name="usb_path" type="str" value="6" />
+    <!-- confiPath: configuration file path -->
+    <param name="confiPath" type="str" value="$(arg argPath)" />
+
+    <!-- color_pcl: Color point cloud.
+             Precondition: It is necessary to turn on depth and RGB alignment in the configuration file.
+             (Default alignment of configuration file) -->
+    <param name="color_pcl" type="boolean" value="false" />
+    <param name="pub_mono8" type="boolean" value="false" />
+
+  </node>
+
+  <node pkg="ascamera_listener" name="ascamera_hp60c_ln_2" type="ascamera_listener_node"
+    respawn="true" output="screen">
+
+    <param name="depth_width" type="int" value="640" />
+    <param name="depth_height" type="int" value="480" />
+    <param name="rgb_width" type="int" value="640" />
+    <param name="rgb_height" type="int" value="480" />
+    <param name="fps" type="int" value="15" />
+
+    <!--这里进行角度调节-->
+    <param name="roll" type="double" value="0.0" />
+    <param name="pitch" type="double" value="15.0" />
+    <param name="yaw" type="double" value="360.0" />
+
+    <!-- usb bus number: -1 not specified-->
+    <param name="usb_bus_no" type="int" value="1" />
+    <!-- usb path(port numbers): "null" not specified-->
+    <param name="usb_path" type="str" value="7" />
+    <!-- confiPath: configuration file path -->
+    <param name="confiPath" type="str" value="$(arg argPath)" />
+
+    <!-- color_pcl: Color point cloud.
+             Precondition: It is necessary to turn on depth and RGB alignment in the configuration file.
+             (Default alignment of configuration file) -->
+    <param name="color_pcl" type="boolean" value="false" />
+    <param name="pub_mono8" type="boolean" value="false" />
+
+  </node>
+
+  <!-- 这里只进行平移调节 -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_camera_1"
+    args="0.31 0.0 0.46 0 0 0 base_link ascamera_hp60c_ln_1" />
+
+  <!-- 这里只进行平移调节 -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_camera_2"
+    args="-0.25 0.0 0.47 3.14 0 0 base_link ascamera_hp60c_ln_2" />
+
+  <!-- 将相机点云转化为scan -->
+  <include file="$(find ascamera_listener)/launch/pointcloud_to_laserscan.launch">
+    <arg name="double_camera" value="$(arg double_camera)" />
+
+  </include>
+
+</launch>

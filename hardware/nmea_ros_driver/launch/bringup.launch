@@ -1,0 +1,31 @@
+<!---->
+
+<launch>
+  <arg name="nmea_com" default="/dev/gps"/>
+  <arg name="baudrate" default="115200"/>
+  <arg name="frame_id" default="gps_link"/>
+  <arg name="pub_gps_odom_tf" default="false"/>
+
+  <!-- gps driver -->
+  <node pkg="nmea_ros_driver" type="nmea_driver_node" name="nmea_ros_driver" output="screen">
+    <param name="nmea_com"    type="string"   value="$(arg nmea_com)"/>
+    <param name="baudrate"    type="int"      value="$(arg baudrate)"/>
+  </node>
+
+  <!-- nmea msg analyze -->
+  <node pkg="nmea_ros_driver" type="nmea_analyze_node" name="nmea_analyze_node" output="screen">
+    <param name="frame_id"        type="string"   value="$(arg frame_id)"/>
+    <param name="nmea_topic_name" type="string"   value="/nmea_msg"/>
+    <param name="enable_custom"   type="bool"     value="false"/>
+    <param name="enable_gga"      type="bool"     value="false"/>
+    <param name="enable_gsa"      type="bool"     value="false"/>
+    <param name="enable_gsv"      type="bool"     value="false"/>
+    <param name="enable_rmc"      type="bool"     value="false"/>
+    <param name="enable_vtg"      type="bool"     value="false"/>
+    <param name="enable_gll"      type="bool"     value="false"/>
+  </node>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="gnss_to_base_link" args="0.0 0.0
+  0.5 0 0 0 base_link gps_link" />
+  
+</launch>

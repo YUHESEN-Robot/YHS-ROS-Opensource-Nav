@@ -1,0 +1,17 @@
+uint8 bms_flag_info_soc
+bool bms_flag_info_single_ov
+bool bms_flag_info_single_uv
+bool bms_flag_info_ov
+bool bms_flag_info_uv
+bool bms_flag_info_charge_ot
+bool bms_flag_info_charge_ut
+bool bms_flag_info_discharge_ot
+bool bms_flag_info_discharge_ut
+bool bms_flag_info_charge_oc
+bool bms_flag_info_discharge_oc
+bool bms_flag_info_short
+bool bms_flag_info_ic_error
+bool bms_flag_info_lock_mos
+bool bms_flag_info_charge_flag
+float32 bms_flag_info_hight_temperature
+float32 bms_flag_info_low_temperature

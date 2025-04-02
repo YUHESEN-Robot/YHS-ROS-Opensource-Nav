@@ -1,0 +1,17 @@
+<!-- -->
+<launch>
+
+  <arg name="is_load_param" default="true" />
+  <rosparam if="$(arg is_load_param)"  file="/home/yhs/catkin_ws/src/yhs_nav/param/yhs_nav_param.yaml" command="load" />
+
+  <!--是否有超声波-->
+  <arg name="have_ultrasonic" default="false"/>
+
+  <node pkg="yhs_can_control" type="yhs_can_control_node" name="yhs_can_control_node"
+    output="screen">
+  </node>
+
+  <node if="$(arg have_ultrasonic)" pkg="tf2_ros" type="static_transform_publisher" name="ul_link_to_base_link"
+    args="0.0 0.0 0.57 0 0 0 base_link ul_link" />
+
+</launch>

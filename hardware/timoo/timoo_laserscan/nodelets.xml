@@ -1,0 +1,10 @@
+<library path="libtimoo_laserscan">
+  <class name="timoo_laserscan/LaserScanNodelet"
+         type="timoo_laserscan::LaserScanNodelet"
+         base_class_type="nodelet::Nodelet">
+    <description>
+      Extract a single ring from a timoo PointCloud2 and publish
+      as a LaserScan.
+    </description>
+  </class>
+</library>

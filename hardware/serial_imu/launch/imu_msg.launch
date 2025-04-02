@@ -1,0 +1,10 @@
+<!---->
+
+<launch>
+  <node pkg="serial_imu" name="HI226" type="serial_imu" output="screen" />
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="imu_broadcaster" args="0.0 0.0
+  0.0 0 0 0 base_link imu_link" />
+
+
+</launch>
